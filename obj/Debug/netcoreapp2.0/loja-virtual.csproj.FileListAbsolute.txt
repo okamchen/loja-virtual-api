@@ -1,0 +1,10 @@
+/home/kone/git/feevale/loja-virtual-api/bin/Debug/netcoreapp2.0/loja-virtual.deps.json
+/home/kone/git/feevale/loja-virtual-api/bin/Debug/netcoreapp2.0/loja-virtual.runtimeconfig.json
+/home/kone/git/feevale/loja-virtual-api/bin/Debug/netcoreapp2.0/loja-virtual.runtimeconfig.dev.json
+/home/kone/git/feevale/loja-virtual-api/bin/Debug/netcoreapp2.0/loja-virtual.dll
+/home/kone/git/feevale/loja-virtual-api/bin/Debug/netcoreapp2.0/loja-virtual.pdb
+/home/kone/git/feevale/loja-virtual-api/obj/Debug/netcoreapp2.0/loja-virtual.csproj.CoreCompileInputs.cache
+/home/kone/git/feevale/loja-virtual-api/obj/Debug/netcoreapp2.0/loja-virtual.AssemblyInfoInputs.cache
+/home/kone/git/feevale/loja-virtual-api/obj/Debug/netcoreapp2.0/loja-virtual.AssemblyInfo.cs
+/home/kone/git/feevale/loja-virtual-api/obj/Debug/netcoreapp2.0/loja-virtual.dll
+/home/kone/git/feevale/loja-virtual-api/obj/Debug/netcoreapp2.0/loja-virtual.pdb
