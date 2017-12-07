@@ -4,10 +4,10 @@ using System.Linq;
 
 namespace loja_virtual.Models
 {
-  public class Preco
+  public class Price
   {
     public int Id { get; set; }
-    public decimal Valor { get; set; }
-    public DateTime Data { get; set; }
+    public decimal Amount { get; set; }
+    public DateTime DateUpdate { get; set; }
   }
 }

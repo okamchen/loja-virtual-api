@@ -1,8 +1,8 @@
 namespace loja_virtual.Models
 {
-  public class Categoria
+  public class Category
   {
     public int Id { get; set; }
-    public string Nome { get; set; }
+    public string Name { get; set; }
   }
 }
