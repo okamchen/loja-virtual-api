@@ -9,10 +9,10 @@ namespace loja_virtual.Models
   {
     public int Id { get; set; }
     public string Name { get; set; }
+    public string ImageUrl { get; set; }
     public ICollection<Price> HistoricPrice { get; set; }
     public DateTime ExpirationDate { get; set; }
     public Category Category { get; set; }
-
     public decimal Price
     {
       get
@@ -25,12 +25,13 @@ namespace loja_virtual.Models
     {
       Id = model.Id;
       Name = model.Name;
+      ImageUrl = model.ImageUrl;
       HistoricPrice = new List<Price>()
       {
         new Price() { DateUpdate = DateTime.Now, Amount = model.Price }
       };
-      ExpirationDate = model.ExpirationDate;
-      Category = model.Category;
+      // ExpirationDate = model.ExpirationDate;
+      // Category = model.Category;
     }
 
   }

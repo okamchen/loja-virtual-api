@@ -11,13 +11,16 @@ namespace loja_virtual.ViewModel
     [RequiredField("Name")]
     public string Name { get; set; }
 
+    [RequiredField("ImageUrl")]
+    public string ImageUrl { get; set; }
+
     [RequiredField("Price")]
     public decimal Price { get; set; }
 
-    [RequiredField("ExpirationDate")]
-    public DateTime ExpirationDate { get; set; }
+    // [RequiredField("ExpirationDate")]
+    // public DateTime ExpirationDate { get; set; }
 
-    [RequiredField("Category")]
-    public Category Category { get; set; }
+    // [RequiredField("Category")]
+    // public Category Category { get; set; }
   }
 }

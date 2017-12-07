@@ -19,11 +19,10 @@ namespace loja_virtual.Controllers
             if (context.User.Count() == 0)
             {
                 context.User.Add(new User { 
-                    Nome = "Oelton" , 
                     Email = "oelton@gmail.com",
                     Login =  "oelton",
                     Password = "1234",
-                    Tipo = "admin"
+                    Tipo = "ADMIN"
                 });
 
                 context.SaveChanges();
