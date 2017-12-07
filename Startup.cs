@@ -31,8 +31,8 @@ namespace loja_virtual
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<LojaVirtualContext>(opt => opt.UseSqlite("DataSource=loja.db"));
-            services.AddMvc();
             services.AddCors();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,7 +40,7 @@ namespace loja_virtual
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
-
+            
             app.UseCors(options => options.WithOrigins("http://localhost:8080").AllowAnyMethod());
 
             app.UseMvc();

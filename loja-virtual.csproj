@@ -11,7 +11,6 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0"/>
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.0"/>
     <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.0.0"/>
-    <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.2.3"/>
   </ItemGroup>
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0"/>
