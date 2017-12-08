@@ -1,17 +1,13 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Extensions.Logging;
 using loja_virtual.Helpers;
 using loja_virtual.Models;
 using loja_virtual.ViewModel;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace loja_virtual.Controllers
 {
-    [Route("api/[controller]")]
+  [Route("api/[controller]")]
     public class UserController : BaseController
     {
         public UserController(LojaVirtualContext context) : base(context) 
@@ -22,7 +18,7 @@ namespace loja_virtual.Controllers
                     Email = "oelton@gmail.com",
                     Login =  "oelton",
                     Password = "1234",
-                    Tipo = "ADMIN"
+                    Profile = "ADMIN"
                 });
 
                 context.SaveChanges();
@@ -58,10 +54,11 @@ namespace loja_virtual.Controllers
 
             validateUser(user, model);
 
-            context.User.Add(new User(model));
+            User newUser = new User(model);
+            context.User.Add(newUser);
             context.SaveChanges();
 
-            return Ok();
+            return Ok(newUser);
         }
 
         public void validateUser(User user, UserViewModel model)
@@ -82,7 +79,7 @@ namespace loja_virtual.Controllers
 
         private void validatePermissionUser(User user)
         {
-            if (user?.Tipo?.ToUpper() == "ADMIN" && context.User.FirstOrDefault(u => u.Id != user.Id && u.Tipo.ToUpper() == "ADMIN") == null)
+            if (user?.Profile?.ToUpper() == "ADMIN" && context.User.FirstOrDefault(u => u.Id != user.Id && u.Profile.ToUpper() == "ADMIN") == null)
                 throw new ValidateException("O único administrador não pode ser removido.");
         }
 
@@ -101,19 +98,19 @@ namespace loja_virtual.Controllers
             {
                 return NotFound();
             } else { 
-                validateUser(user, model);
+                validatePermissionUser(user);
             }
 
-            user.Nome = user.Nome;
+            user.Name = user.Name;
             user.Login = user.Login;
-            user.Tipo = user.Tipo;
+            user.Profile = user.Profile;
             user.Email = user.Email;
             user.Password = user.Password;
 
             context.User.Update(user);
             context.SaveChanges();
 
-            return Ok();
+            return Ok(user);
         }
 
         [HttpDelete("{id}")]

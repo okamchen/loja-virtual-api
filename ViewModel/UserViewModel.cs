@@ -12,20 +12,21 @@ namespace loja_virtual.ViewModel
     {
       Id = u.Id;
       Email = u.Email;
+      Name = u.Name;
       Login = u.Login;
-      Tipo = u.Tipo;
+      Profile = u.Profile;
     }
     public long Id { get; set; }
 
     [RequiredField("Login")]
     [MinFieldLength("Login", 5)]
     public string Login { get; set; }
+    public string Name { get; set; }
 
     [RequiredField("Email")]
     [EmailAddress(ErrorMessage = "Email inválido")]
     public string Email { get; set; }
 
-    [TypeUserField]
-    public string Tipo { get; set; }
+    public string Profile { get; set; }
   }
 }

@@ -41,7 +41,7 @@ namespace loja_virtual
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
             
-            app.UseCors(options => options.WithOrigins("http://localhost:8080").AllowAnyMethod());
+            app.UseCors(options => options.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader());
 
             app.UseMvc();
         }

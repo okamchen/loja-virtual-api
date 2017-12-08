@@ -11,8 +11,8 @@ using System;
 namespace lojavirtual.Migrations
 {
     [DbContext(typeof(LojaVirtualContext))]
-    [Migration("20171208030954_add-product-description")]
-    partial class addproductdescription
+    [Migration("20171208212802_add-name-user")]
+    partial class addnameuser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -97,7 +97,7 @@ namespace lojavirtual.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("CategoryId");
+                    b.Property<int>("CategoryId");
 
                     b.Property<string>("Description");
 
@@ -123,11 +123,11 @@ namespace lojavirtual.Migrations
 
                     b.Property<string>("Login");
 
-                    b.Property<string>("Nome");
+                    b.Property<string>("Name");
 
                     b.Property<string>("Password");
 
-                    b.Property<string>("Tipo");
+                    b.Property<string>("Profile");
 
                     b.HasKey("Id");
 
@@ -160,7 +160,8 @@ namespace lojavirtual.Migrations
                 {
                     b.HasOne("loja_virtual.Models.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

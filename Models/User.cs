@@ -9,14 +9,15 @@ namespace loja_virtual.Models
     {
       Login = u.Login;
       Email = u.Email;
-      Tipo = u.Tipo;
+      Name = u.Name;
+      Profile = u.Profile == null ? "USER" : u.Profile;
       Password = u.Password;
     }
     public long Id { get; set; }
     public string Login { get; set; }
     public string Email { get; set; }
-    public string Tipo { get; set; }
-    public string Nome { get; set; }
+    public string Profile { get; set; }
+    public string Name { get; set; }
     public string Password { get; set; }
   }
 }

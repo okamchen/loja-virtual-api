@@ -45,7 +45,7 @@ namespace loja_virtual.Controllers
       context.Entry<Price>(p.HistoricPrice.FirstOrDefault()).State = EntityState.Added;
       context.SaveChanges();
 
-      return Ok();
+      return Ok(p);
     }
 
     [HttpPut("{id}", Name = "PutProduct")]
@@ -60,7 +60,7 @@ namespace loja_virtual.Controllers
       context.Entry<Product>(p).State = EntityState.Modified;
       context.SaveChanges();
 
-      return Ok();
+      return Ok(p);
     }
 
     [HttpDelete("{id}")]
