@@ -12543,11 +12543,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/kone/git/feevale/loja-virtual-api/loja-virtual.csproj",
+      "projectUniqueName": "/home/kone/git/feevale/loja-virtual/api/loja-virtual.csproj",
       "projectName": "loja-virtual",
-      "projectPath": "/home/kone/git/feevale/loja-virtual-api/loja-virtual.csproj",
+      "projectPath": "/home/kone/git/feevale/loja-virtual/api/loja-virtual.csproj",
       "packagesPath": "/home/kone/.nuget/packages/",
-      "outputPath": "/home/kone/git/feevale/loja-virtual-api/obj/",
+      "outputPath": "/home/kone/git/feevale/loja-virtual/api/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/share/dotnet/sdk/NuGetFallbackFolder"
