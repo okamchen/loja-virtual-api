@@ -58,15 +58,11 @@ namespace lojavirtual.Migrations
 
                     b.Property<int?>("OrderId");
 
-                    b.Property<int?>("PriceId");
-
                     b.Property<int?>("ProductId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
-
-                    b.HasIndex("PriceId");
 
                     b.HasIndex("ProductId");
 
@@ -106,6 +102,8 @@ namespace lojavirtual.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<decimal>("Price");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -138,10 +136,6 @@ namespace lojavirtual.Migrations
                     b.HasOne("loja_virtual.Models.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderId");
-
-                    b.HasOne("loja_virtual.Models.Price", "Price")
-                        .WithMany()
-                        .HasForeignKey("PriceId");
 
                     b.HasOne("loja_virtual.Models.Product", "Product")
                         .WithMany()

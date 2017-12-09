@@ -58,6 +58,7 @@ namespace loja_virtual.Controllers
 
       var p = new Product(model);
       context.Entry<Product>(p).State = EntityState.Modified;
+      context.Entry<Price>(p.HistoricPrice.FirstOrDefault()).State = EntityState.Added;
       context.SaveChanges();
 
       return Ok(p);

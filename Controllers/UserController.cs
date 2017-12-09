@@ -17,8 +17,9 @@ namespace loja_virtual.Controllers
                 context.User.Add(new User { 
                     Email = "oelton@gmail.com",
                     Login =  "oelton",
-                    Password = "1234",
-                    Profile = "ADMIN"
+                    Password = "123456",
+                    Profile = "ADMIN",
+                    Name = "Oelton Kamchen"
                 });
 
                 context.SaveChanges();
@@ -31,6 +32,18 @@ namespace loja_virtual.Controllers
             var users = context.User
             .Select(p => new UserViewModel(p)).ToList();
             return Ok(users);
+        }
+
+        [HttpPost("login")]
+        public IActionResult ValidateLogin([FromBody] LoginViewModel model)
+        {
+            User user = context.User
+                .FirstOrDefault(u => u.Login == model.Login && u.Password == model.Password);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return new ObjectResult(user);
         }
 
         [HttpGet("{id}", Name = "GetUser")]

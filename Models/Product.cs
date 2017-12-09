@@ -15,19 +15,14 @@ namespace loja_virtual.Models
     public DateTime ExpirationDate { get; set; }
     public Category Category { get; set; }
     public int CategoryId { get; set; }
-    public decimal Price
-    {
-      get
-      {
-        return HistoricPrice.Any() ? HistoricPrice.OrderByDescending(p => p.DateUpdate).First().Amount : 0;
-      }
-    }
+    public decimal Price { get; set; } 
     public Product() { }
     public Product(ProductViewModel model)
     {
       Id = model.Id;
       Name = model.Name;
       ImageUrl = model.ImageUrl;
+      Price = model.Price;
       HistoricPrice = new List<Price>()
       {
         new Price() { DateUpdate = DateTime.Now, Amount = model.Price }

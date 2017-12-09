@@ -11,7 +11,7 @@ using System;
 namespace lojavirtual.Migrations
 {
     [DbContext(typeof(LojaVirtualContext))]
-    [Migration("20171208211141_init-project")]
+    [Migration("20171209121517_init-project")]
     partial class initproject
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,15 +59,11 @@ namespace lojavirtual.Migrations
 
                     b.Property<int?>("OrderId");
 
-                    b.Property<int?>("PriceId");
-
                     b.Property<int?>("ProductId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
-
-                    b.HasIndex("PriceId");
 
                     b.HasIndex("ProductId");
 
@@ -107,6 +103,8 @@ namespace lojavirtual.Migrations
 
                     b.Property<string>("Name");
 
+                    b.Property<decimal>("Price");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -139,10 +137,6 @@ namespace lojavirtual.Migrations
                     b.HasOne("loja_virtual.Models.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderId");
-
-                    b.HasOne("loja_virtual.Models.Price", "Price")
-                        .WithMany()
-                        .HasForeignKey("PriceId");
 
                     b.HasOne("loja_virtual.Models.Product", "Product")
                         .WithMany()

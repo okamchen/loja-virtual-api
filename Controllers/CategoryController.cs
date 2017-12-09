@@ -9,7 +9,18 @@ namespace loja_virtual.Controllers
     [Route("api/[controller]")]
     public class CategoryController : BaseController
     {
-        public CategoryController(LojaVirtualContext context) : base(context) { }
+        public CategoryController(LojaVirtualContext context) : base(context) 
+        { 
+            if (context.Category.Count() == 0)
+            {
+                context.Category.Add(new Category{Name = "Smarthphone"});
+                context.Category.Add(new Category{Name = "Acessórios"});
+                context.Category.Add(new Category{Name = "Consoles"});
+                context.Category.Add(new Category{Name = "Games"});
+
+                context.SaveChanges();
+            }
+        }
 
         [HttpGet]
         public IEnumerable<Category> GetAll()
