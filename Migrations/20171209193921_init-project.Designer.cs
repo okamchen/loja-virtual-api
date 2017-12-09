@@ -11,7 +11,7 @@ using System;
 namespace lojavirtual.Migrations
 {
     [DbContext(typeof(LojaVirtualContext))]
-    [Migration("20171209121517_init-project")]
+    [Migration("20171209193921_init-project")]
     partial class initproject
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,17 +37,30 @@ namespace lojavirtual.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<long?>("ClientId");
+
                     b.Property<DateTime>("DateAccepted");
 
                     b.Property<DateTime>("DateExpedition");
 
                     b.Property<DateTime>("DateOrder");
 
-                    b.Property<int>("IdClient");
+                    b.Property<long>("IdClient");
+
+                    b.Property<int?>("OrderProductId");
+
+                    b.Property<int?>("PriceId");
 
                     b.Property<string>("Situation");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("OrderProductId")
+                        .IsUnique();
+
+                    b.HasIndex("PriceId");
 
                     b.ToTable("Order");
                 });
@@ -57,13 +70,13 @@ namespace lojavirtual.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("OrderId");
+                    b.Property<int?>("PriceId");
 
                     b.Property<int?>("ProductId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OrderId");
+                    b.HasIndex("PriceId");
 
                     b.HasIndex("ProductId");
 
@@ -75,11 +88,11 @@ namespace lojavirtual.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<decimal>("Amount");
-
                     b.Property<DateTime>("DateUpdate");
 
                     b.Property<int?>("ProductId");
+
+                    b.Property<decimal>("Value");
 
                     b.HasKey("Id");
 
@@ -132,11 +145,26 @@ namespace lojavirtual.Migrations
                     b.ToTable("User");
                 });
 
+            modelBuilder.Entity("loja_virtual.Models.Order", b =>
+                {
+                    b.HasOne("loja_virtual.Models.User", "Client")
+                        .WithMany()
+                        .HasForeignKey("ClientId");
+
+                    b.HasOne("loja_virtual.Models.OrderProduct", "OrderProduct")
+                        .WithOne("Order")
+                        .HasForeignKey("loja_virtual.Models.Order", "OrderProductId");
+
+                    b.HasOne("loja_virtual.Models.Price", "Price")
+                        .WithMany()
+                        .HasForeignKey("PriceId");
+                });
+
             modelBuilder.Entity("loja_virtual.Models.OrderProduct", b =>
                 {
-                    b.HasOne("loja_virtual.Models.Order", "Order")
+                    b.HasOne("loja_virtual.Models.Price", "Price")
                         .WithMany()
-                        .HasForeignKey("OrderId");
+                        .HasForeignKey("PriceId");
 
                     b.HasOne("loja_virtual.Models.Product", "Product")
                         .WithMany()

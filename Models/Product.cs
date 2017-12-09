@@ -25,14 +25,12 @@ namespace loja_virtual.Models
       Price = model.Price;
       HistoricPrice = new List<Price>()
       {
-        new Price() { DateUpdate = DateTime.Now, Amount = model.Price }
+        new Price() { DateUpdate = DateTime.Now, Value = model.Price }
       };
       ExpirationDate = model.ExpirationDate;
       Category = model.Category;
       CategoryId = model.Category.Id;
       Description = model.Description;
-      
     }
-
   }
 }

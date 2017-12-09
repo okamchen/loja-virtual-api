@@ -7,7 +7,7 @@ namespace loja_virtual.Models
   public class Price
   {
     public int Id { get; set; }
-    public decimal Amount { get; set; }
+    public decimal Value { get; set; }
     public DateTime DateUpdate { get; set; }
   }
 }
