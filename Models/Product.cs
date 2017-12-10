@@ -7,7 +7,7 @@ namespace loja_virtual.Models
 {
   public class Product
   {
-    public int Id { get; set; }
+    public long Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
     public string ImageUrl { get; set; }
@@ -29,6 +29,17 @@ namespace loja_virtual.Models
       };
       ExpirationDate = model.ExpirationDate;
       Category = model.Category;
+      CategoryId = model.Category.Id;
+      Description = model.Description;
+    }
+
+    public Product(ProductOrderViewModel model)
+    {
+      Id = model.Id;
+      Name = model.Name;
+      ImageUrl = model.ImageUrl;
+      Price = model.Price;
+      ExpirationDate = model.ExpirationDate;
       CategoryId = model.Category.Id;
       Description = model.Description;
     }

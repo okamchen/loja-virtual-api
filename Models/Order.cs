@@ -13,14 +13,13 @@ namespace loja_virtual.Models
     public string Situation { get; set; }
     public DateTime DateExpedition { get; set; }
     public DateTime DateAccepted { get; set; }
-    public OrderProduct OrderProduct { get; set; }
-    public Price Price { get; set; }
+    public decimal TotalPrice { get; set; }
     public Order() { }
     public Order(OrderViewModel model)
     {
       Id = model.Id;
       IdClient = model.Client.Id;
-      Client = model.Client;
+      Client = new User(model.Client);
       DateOrder = DateTime.Now;
       Situation = model.Situation;
       DateExpedition = model.DateExpedition;

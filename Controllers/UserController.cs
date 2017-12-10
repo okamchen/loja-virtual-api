@@ -71,7 +71,7 @@ namespace loja_virtual.Controllers
             context.User.Add(newUser);
             context.SaveChanges();
 
-            return Ok(newUser);
+            return Ok(new UserViewModel(newUser));
         }
 
         public void validateUser(User user, UserViewModel model)

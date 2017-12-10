@@ -36,8 +36,6 @@ namespace lojavirtual.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<long?>("ClientId");
-
                     b.Property<DateTime>("DateAccepted");
 
                     b.Property<DateTime>("DateExpedition");
@@ -46,20 +44,11 @@ namespace lojavirtual.Migrations
 
                     b.Property<long>("IdClient");
 
-                    b.Property<int?>("OrderProductId");
-
-                    b.Property<int?>("PriceId");
-
                     b.Property<string>("Situation");
 
+                    b.Property<decimal>("TotalPrice");
+
                     b.HasKey("Id");
-
-                    b.HasIndex("ClientId");
-
-                    b.HasIndex("OrderProductId")
-                        .IsUnique();
-
-                    b.HasIndex("PriceId");
 
                     b.ToTable("Order");
                 });
@@ -69,13 +58,19 @@ namespace lojavirtual.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("PriceId");
+                    b.Property<long>("IdOrder");
 
-                    b.Property<int?>("ProductId");
+                    b.Property<long>("IdProduct");
+
+                    b.Property<int?>("OrderId");
+
+                    b.Property<decimal>("Price");
+
+                    b.Property<long?>("ProductId");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PriceId");
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("ProductId");
 
@@ -89,7 +84,7 @@ namespace lojavirtual.Migrations
 
                     b.Property<DateTime>("DateUpdate");
 
-                    b.Property<int?>("ProductId");
+                    b.Property<long?>("ProductId");
 
                     b.Property<decimal>("Value");
 
@@ -102,7 +97,7 @@ namespace lojavirtual.Migrations
 
             modelBuilder.Entity("loja_virtual.Models.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("CategoryId");
@@ -144,26 +139,11 @@ namespace lojavirtual.Migrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("loja_virtual.Models.Order", b =>
-                {
-                    b.HasOne("loja_virtual.Models.User", "Client")
-                        .WithMany()
-                        .HasForeignKey("ClientId");
-
-                    b.HasOne("loja_virtual.Models.OrderProduct", "OrderProduct")
-                        .WithOne("Order")
-                        .HasForeignKey("loja_virtual.Models.Order", "OrderProductId");
-
-                    b.HasOne("loja_virtual.Models.Price", "Price")
-                        .WithMany()
-                        .HasForeignKey("PriceId");
-                });
-
             modelBuilder.Entity("loja_virtual.Models.OrderProduct", b =>
                 {
-                    b.HasOne("loja_virtual.Models.Price", "Price")
+                    b.HasOne("loja_virtual.Models.Order", "Order")
                         .WithMany()
-                        .HasForeignKey("PriceId");
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("loja_virtual.Models.Product", "Product")
                         .WithMany()

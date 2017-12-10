@@ -13,6 +13,15 @@ namespace loja_virtual.Models
       Profile = u.Profile == null ? "USER" : u.Profile;
       Password = u.Password;
     }
+
+    public User(UserViewModel u)
+    {
+      Login = u.Login;
+      Email = u.Email;
+      Name = u.Name;
+      Profile = u.Profile;
+    }
+
     public long Id { get; set; }
     public string Login { get; set; }
     public string Email { get; set; }

@@ -22,6 +22,24 @@ namespace lojavirtual.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Order",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    DateAccepted = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateExpedition = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    DateOrder = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    IdClient = table.Column<long>(type: "INTEGER", nullable: false),
+                    Situation = table.Column<string>(type: "TEXT", nullable: true),
+                    TotalPrice = table.Column<decimal>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Order", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "User",
                 columns: table => new
                 {
@@ -42,7 +60,7 @@ namespace lojavirtual.Migrations
                 name: "Product",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<long>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     CategoryId = table.Column<int>(type: "INTEGER", nullable: false),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
@@ -63,13 +81,42 @@ namespace lojavirtual.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "OrderProduct",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    IdOrder = table.Column<long>(type: "INTEGER", nullable: false),
+                    IdProduct = table.Column<long>(type: "INTEGER", nullable: false),
+                    OrderId = table.Column<int>(type: "INTEGER", nullable: true),
+                    Price = table.Column<decimal>(type: "TEXT", nullable: false),
+                    ProductId = table.Column<long>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderProduct", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderProduct_Order_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Order",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OrderProduct_Product_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Price",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     DateUpdate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    ProductId = table.Column<int>(type: "INTEGER", nullable: true),
+                    ProductId = table.Column<long>(type: "INTEGER", nullable: true),
                     Value = table.Column<decimal>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
@@ -83,90 +130,10 @@ namespace lojavirtual.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "OrderProduct",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    PriceId = table.Column<int>(type: "INTEGER", nullable: true),
-                    ProductId = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderProduct", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_OrderProduct_Price_PriceId",
-                        column: x => x.PriceId,
-                        principalTable: "Price",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_OrderProduct_Product_ProductId",
-                        column: x => x.ProductId,
-                        principalTable: "Product",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Order",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    ClientId = table.Column<long>(type: "INTEGER", nullable: true),
-                    DateAccepted = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DateExpedition = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    DateOrder = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    IdClient = table.Column<long>(type: "INTEGER", nullable: false),
-                    OrderProductId = table.Column<int>(type: "INTEGER", nullable: true),
-                    PriceId = table.Column<int>(type: "INTEGER", nullable: true),
-                    Situation = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Order", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Order_User_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Order_OrderProduct_OrderProductId",
-                        column: x => x.OrderProductId,
-                        principalTable: "OrderProduct",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Order_Price_PriceId",
-                        column: x => x.PriceId,
-                        principalTable: "Price",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
             migrationBuilder.CreateIndex(
-                name: "IX_Order_ClientId",
-                table: "Order",
-                column: "ClientId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Order_OrderProductId",
-                table: "Order",
-                column: "OrderProductId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Order_PriceId",
-                table: "Order",
-                column: "PriceId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderProduct_PriceId",
+                name: "IX_OrderProduct_OrderId",
                 table: "OrderProduct",
-                column: "PriceId");
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderProduct_ProductId",
@@ -187,16 +154,16 @@ namespace lojavirtual.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "OrderProduct");
+
+            migrationBuilder.DropTable(
+                name: "Price");
 
             migrationBuilder.DropTable(
                 name: "User");
 
             migrationBuilder.DropTable(
-                name: "OrderProduct");
-
-            migrationBuilder.DropTable(
-                name: "Price");
+                name: "Order");
 
             migrationBuilder.DropTable(
                 name: "Product");
