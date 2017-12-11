@@ -11,7 +11,7 @@ using System;
 namespace lojavirtual.Migrations
 {
     [DbContext(typeof(LojaVirtualContext))]
-    [Migration("20171211050901_init-project")]
+    [Migration("20171211051452_init-project")]
     partial class initproject
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

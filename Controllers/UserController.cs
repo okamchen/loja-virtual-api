@@ -10,21 +10,7 @@ namespace loja_virtual.Controllers
   [Route("api/[controller]")]
     public class UserController : BaseController
     {
-        public UserController(LojaVirtualContext context) : base(context) 
-        {
-            // if (context.User.ToList().Count() == 0)
-            // {
-            //     context.User.Add(new User { 
-            //         Email = "oelton@gmail.com",
-            //         Login =  "oelton",
-            //         Password = "123456",
-            //         Profile = "ADMIN",
-            //         Name = "Oelton Kamchen"
-            //     });
-
-            //     context.SaveChanges();
-            // }
-        }
+        public UserController(LojaVirtualContext context) : base(context) {}
 
         [HttpGet]
         public IActionResult GetAll()
@@ -62,10 +48,14 @@ namespace loja_virtual.Controllers
         {
             ValidateModel();
 
+
             User user = context.User
             .FirstOrDefault(u => u.Email == model.Email || u.Login == model.Login);
 
             validateUser(user, model);
+
+            var amoutAdmin = context.User.Where(u=> u.Profile.ToUpper() == "ADMIN").ToList().Count();
+            model.Profile = amoutAdmin == 0 ? "ADMIN" : "USER";
 
             User newUser = new User(model);
             context.User.Add(newUser);

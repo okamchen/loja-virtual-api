@@ -117,5 +117,44 @@ namespace loja_virtual.Controllers
 
       return Ok(order);
     }
+
+    [HttpDelete("remove/{idOrder}")]
+    public IActionResult removeOrder(long idOrder)
+    {
+      ValidateModel();
+
+      var order = context.Order.FirstOrDefault(o => o.Id == idOrder);
+      if( order == null)
+        throw new ValidateException("Order not found");
+
+      if(order.Situation == "Pending")
+        throw new ValidateException("Order can't be remove becausa the situation is pending");
+
+      var orderProducts = context.OrderProduct.Where(o=> o.IdOrder == idOrder).ToList();
+      orderProducts.ForEach(op => context.OrderProduct.Remove(op));
+      context.SaveChanges();
+
+      context.Order.Remove(order);
+
+      return Ok();
+    }
+
+    [HttpPost("authorize/{idOrder}")]
+    public IActionResult authorizeOrder(long idOrder, [FromBody]UserViewModel user)
+    {
+      ValidateModel();
+
+      if(user.Profile.ToUpper() != "ADMIN")
+        throw new ValidateException("User does not have permission to authorize order");
+
+      var order = context.Order.FirstOrDefault(o=> o.Id == idOrder);
+      if(order.Situation.ToUpper() == "AUTHORIZED")
+        throw new ValidateException("Order already has the status of authorized for submission.");
+
+      order.Situation = "Authorized";
+      context.SaveChanges();
+
+      return Ok(order);
+    }
   }
 }
