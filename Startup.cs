@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using loja_virtual.Models;
+using loja_virtual.Helpers;
 
 namespace loja_virtual
 {
@@ -42,6 +43,7 @@ namespace loja_virtual
             loggerFactory.AddDebug();
             
             app.UseCors(options => options.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader());
+            app.UseMiddleware(typeof(ExceptionHandling));
 
             app.UseMvc();
         }

@@ -36,7 +36,6 @@ namespace loja_virtual.Helpers
       if (exception is ValidateException)
       {
         result = JsonConvert.SerializeObject(new { errors = ((ValidateException)exception).Errors });
-        statusCode = 200;
       }
       else
         result = JsonConvert.SerializeObject(new { error = exception.Message });

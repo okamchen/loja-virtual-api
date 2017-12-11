@@ -12,18 +12,18 @@ namespace loja_virtual.Controllers
     {
         public UserController(LojaVirtualContext context) : base(context) 
         {
-            if (context.User.Count() == 0)
-            {
-                context.User.Add(new User { 
-                    Email = "oelton@gmail.com",
-                    Login =  "oelton",
-                    Password = "123456",
-                    Profile = "ADMIN",
-                    Name = "Oelton Kamchen"
-                });
+            // if (context.User.ToList().Count() == 0)
+            // {
+            //     context.User.Add(new User { 
+            //         Email = "oelton@gmail.com",
+            //         Login =  "oelton",
+            //         Password = "123456",
+            //         Profile = "ADMIN",
+            //         Name = "Oelton Kamchen"
+            //     });
 
-                context.SaveChanges();
-            }
+            //     context.SaveChanges();
+            // }
         }
 
         [HttpGet]
@@ -78,13 +78,11 @@ namespace loja_virtual.Controllers
         {
             if (user != null)
             {
-                validatePermissionUser(user);
-
                 List<string> errors = new List<string>();
                 if (user.Login == model.Login)
-                    errors.Add("O 'Login' informado já está sendo usado.");
+                    errors.Add("Login is already being used.");
                 if (user.Email == model.Email)
-                    errors.Add("O 'Email' informado já está sendo usado.");
+                    errors.Add("Email is already being used.");
                 throw new ValidateException() { Errors = errors };
             }
 
@@ -92,8 +90,8 @@ namespace loja_virtual.Controllers
 
         private void validatePermissionUser(User user)
         {
-            if (user?.Profile?.ToUpper() == "ADMIN" && context.User.FirstOrDefault(u => u.Id != user.Id && u.Profile.ToUpper() == "ADMIN") == null)
-                throw new ValidateException("O único administrador não pode ser removido.");
+            if (context.User.Where(u => u.Profile.ToUpper() == "ADMIN").ToList().Count() <= 1)
+                throw new ValidateException("The only administrator can not be removed.");
         }
 
         [HttpPut("{id}")]
@@ -136,6 +134,11 @@ namespace loja_virtual.Controllers
             }
 
             validatePermissionUser(user);
+
+            var countOrderLinked = context.OrderProduct.Where(op => op.IdClient == id).ToList().Count();
+            countOrderLinked =+ context.Order.Where(o => o.IdClient == id).ToList().Count();
+            if(countOrderLinked > 0) 
+                throw new ValidateException("User is linked to a order.");
 
             context.User.Remove(user);
             context.SaveChanges();

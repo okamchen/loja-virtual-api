@@ -20,10 +20,10 @@ namespace loja_virtual.Controllers
       {
           if (context.Category.Count() == 0)
           {
-              context.Category.Add(new Category{Name = "Smarthphone"});
-              context.Category.Add(new Category{Name = "Acessórios"});
-              context.Category.Add(new Category{Name = "Consoles"});
-              context.Category.Add(new Category{Name = "Games"});
+              context.Category.Add(new Category{ Id = 1, Name = "Smarthphone"});
+              context.Category.Add(new Category{ Id = 2, Name = "Acessórios"});
+              context.Category.Add(new Category{ Id = 3, Name = "Consoles"});
+              context.Category.Add(new Category{ Id = 4, Name = "Games"});
 
               context.SaveChanges();
           }
@@ -77,14 +77,66 @@ namespace loja_virtual.Controllers
             CategoryId = 1,
             Price = new decimal (6999.9)
           });
+
+          context.Product.Add(new Product(){
+            Name = "Playstation 4", 
+            Description = "Console Playstation 4 Slim 500gb + 4 Jogos",
+            ImageUrl = "https://images-americanas.b2w.io/produtos/01/00/sku/29691/2/29691263_1SZ.jpg",
+            ExpirationDate = DateTime.Now,
+            Category = new Category(){Id = 3},
+            CategoryId = 3,
+            Price = new decimal (1999.9)
+          });
+
+          context.Product.Add(new Product(){
+            Name = "Resident Evil 7", 
+            Description = "Game Resident Evil 7 Biohazard Gold Edition - PS4",
+            ImageUrl = "https://images-americanas.b2w.io/produtos/01/00/item/132797/1/132797162SZ.jpg",
+            ExpirationDate = DateTime.Now,
+            Category = new Category(){Id = 4},
+            CategoryId = 4,
+            Price = new decimal (179.9)
+          });
+
+          context.Product.Add(new Product(){
+            Name = "UFC 3", 
+            Description = "Game UFC 3 - PS4",
+            ImageUrl = "https://images-americanas.b2w.io/produtos/01/00/item/132886/7/132886704SZ.jpg",
+            ExpirationDate = DateTime.Now,
+            Category = new Category(){Id = 4},
+            CategoryId = 4,
+            Price = new decimal (249.9)
+          });
+
+          context.Product.Add(new Product(){
+            Name = "Xbox One X", 
+            Description = "Console Xbox One X 1TB - Project Scorpio Edition + Controle sem Fio",
+            ImageUrl = "https://images-americanas.b2w.io/produtos/01/00/item/132762/5/132762592SZ.jpg",
+            ExpirationDate = DateTime.Now,
+            Category = new Category(){Id = 3},
+            CategoryId = 3,
+            Price = new decimal (3999.9)
+          });
           
           context.SaveChanges();
       }
     }
 
-    [HttpGet]
-    public IActionResult Get() => Ok(context.Product.Include(p => p.Category).Include(p => p.HistoricPrice).ToList());
+    [HttpGet("filter/{idCategoria}/{order}")]
+    public IActionResult GetWithFilter(long idCategoria, string order)
+    {
+      var products = context.Product.Where(pdt => pdt.Category.Id == idCategoria || idCategoria == 0)
+          .Include(p => p.Category).Include(p => p.HistoricPrice);
+      
+      order = string.IsNullOrEmpty(order) ? "" : order;
+      if (order.ToLower() == "asc")
+        return Ok(products.OrderBy(p => p.Price));
+      else if (order.ToLower() == "desc")
+        return Ok(products.OrderByDescending(p => p.Price));
+      else
+        return Ok(products.OrderBy(p => p.Id));
 
+    } 
 
     [HttpGet("{id}", Name = "GetProduct")]
     public IActionResult GetById(long id)

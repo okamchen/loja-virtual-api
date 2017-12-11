@@ -10,6 +10,8 @@ namespace loja_virtual.Models
     public Product Product { get; set; }
     public long IdOrder { get; set; }
     public Order Order { get; set; }
+    public User Client { get; set; }
+    public long IdClient { get; set; }
     public decimal Price { get; set; }
     public OrderProduct() {}
     public OrderProduct(Order order, Product product)

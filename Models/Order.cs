@@ -24,6 +24,7 @@ namespace loja_virtual.Models
       Situation = model.Situation;
       DateExpedition = model.DateExpedition;
       DateAccepted = model.DateAccepted;
+      TotalPrice = model.TotalPrice;
     }
   }
 }
